@@ -24,13 +24,13 @@ function validateKey() {
     $key = $app->request->params('auth');
 
     if (!$key){
-        $app->redirect('./error/app/notkey');
+        $app->redirect('/notkey');
     }
     else{
         $v3ctor = V3ctorWH::getInstance();
 
         if ($key != $v3ctor->getKey()){
-            $app->redirect('./error/app/invalidkey');
+            $app->redirect('/invalidkey');
         }
     }
 }
@@ -163,7 +163,7 @@ $app->post(
 
 // Not Sent Key
 $app->get(
-    '/error/app/notkey',
+    '/notkey',
     function () use ($app) {
         $app->response()->header('Content-Type', 'application/json');
         $app->response()->status(404);
@@ -173,7 +173,7 @@ $app->get(
 
 // Not Valid Key
 $app->get(
-    '/error/app/invalidkey',
+    '/invalidkey',
     function () use ($app) {
         $app->response()->header('Content-Type', 'application/json');
         $app->response()->status(404);
