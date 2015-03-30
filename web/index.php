@@ -1,7 +1,8 @@
 <?php
-require 'Slim/Slim.php';
 require_once('../classes/config.php');
 require_once('../classes/V3ctorWH.class.php');
+
+require '../vendor/autoload.php';
 
 \Slim\Slim::registerAutoloader();
 

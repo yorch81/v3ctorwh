@@ -13,6 +13,7 @@ In the Code phpDoc.
 
 ## Installation ##
 Clone Repository
+Execute php composer.phar install
 
 ## Notes ##
 V3ctorWH is a Objects WareHouse in MongoDb
