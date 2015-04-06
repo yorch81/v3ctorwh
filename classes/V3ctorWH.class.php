@@ -73,10 +73,15 @@ class V3ctorWH
 	{
 		$this->_key = $key;
 
-		$this->_conn = new Mongo('mongodb://' . $username . ':' . $password . '@' . $hostname .':27017/' . $dbname);
+		try{
+            $this->_conn = new Mongo('mongodb://' . $username . ':' . $password . '@' . $hostname .':27017/' . $dbname);
 
-		if (! is_null($this->_conn))
-			$this->_db = $this->_conn->selectDB($dbname);
+			if (! is_null($this->_conn))
+				$this->_db = $this->_conn->selectDB($dbname);
+        }
+        catch (Exception $e) {
+            $this->_conn = null;
+        }
 	}
 
 

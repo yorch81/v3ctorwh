@@ -37,6 +37,8 @@ $ curl -X POST -d '{"field" : "value"}' http://my_url/query/entity/?auth=key
 ## References ##
 http://es.wikipedia.org/wiki/Singleton
 
+P.D. Let's go play !!!
+
 
 
 
