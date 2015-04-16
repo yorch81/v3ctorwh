@@ -118,9 +118,9 @@ class V3ctorWH
 	}
 
 	/**
-	 * Gets V3ctorDb Key
+	 * Gets V3ctorWH Key
 	 * 
-	 * @return string V3ctorDb Key
+	 * @return string V3ctorWH Key
 	 */
 	public function getKey()
 	{

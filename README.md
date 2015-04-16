@@ -9,7 +9,7 @@ V3ctorWH is a Objects WareHouse for V3ctor Club
 * [Slim Framework](http://www.slimframework.com/)
 
 ## Developer Documentation ##
-In the Code phpDoc.
+Execute phpdoc -d classes/
 
 ## Installation ##
 Clone Repository
