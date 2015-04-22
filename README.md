@@ -20,7 +20,7 @@ V3ctorWH is a Objects WareHouse in MongoDb
 
 ## Examples ##
 To Create Object
-$ curl -X POST -d '{"r" : 666}' http://my_url/entity/?auth=key
+$ curl -X POST -d '{"r" : 666}' http://my_url/entity?auth=key
 
 To Get Object
 $ curl http://my_url/entity/_id?auth=key
