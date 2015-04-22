@@ -32,7 +32,7 @@ To Delete Object
 $ curl -X DELETE http://my_url/entity/_id?auth=key
 
 To Query Entity
-$ curl -X POST -d '{"field" : "value"}' http://my_url/query/entity/?auth=key
+$ curl -X POST -d '{"field" : "value"}' http://my_url/query/entity?auth=key
 
 ## References ##
 http://es.wikipedia.org/wiki/Singleton
