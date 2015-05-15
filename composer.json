@@ -13,6 +13,7 @@
     ],
     "require": {
     	"php": ">=5.4.0",
-        "slim/slim": "2.*"
+        "slim/slim": "2.*",
+        "catfan/medoo": "dev-master"
     }
 }

@@ -31,10 +31,18 @@ abstract class WareHouse
 	/**
      * Connection Handler
      *
-     * @var object $_connection Handler Connection
+     * @var object $_conn Handler Connection
      * @access private
      */
-	protected $_connection = null;
+	protected $_conn = null;
+
+	/**
+     * V3ctorWH Key
+     *
+     * @var string $_key V3ctorWH Key
+     * @access private
+     */
+	protected $_key = null;
 
 	/**
 	 * Find Object by _id
@@ -98,7 +106,211 @@ abstract class WareHouse
 	 */
 	public function isConnected()
 	{
-		return !is_null($this->_connection);
+		return !is_null($this->_conn);
+	}
+
+	/**
+	 * Gets V3ctorWH Key
+	 * 
+	 * @return string V3ctorWH Key
+	 */
+	public function getKey()
+	{
+		return $this->_key;
+	}
+}
+
+/**
+ * v3Mongo WareHouse for MongoDb
+ *
+ * @category   v3Mongo
+ * @package    v3Mongo
+ * @copyright  Copyright 2015 Jorge Alberto Ponce Turrubiates
+ * @license    http://www.apache.org/licenses/LICENSE-2.0
+ * @version    1.0.0, 2015-05-14
+ * @author     Jorge Alberto Ponce Turrubiates (the.yorch@gmail.com)
+ */
+class v3Mongo extends WareHouse
+{
+	/**
+     * MongoDb DataBase
+     *
+     * @var object $_db MongoDb DataBase
+     * @access private
+     */
+	protected $_db = null;
+
+	/**
+	 * Constructor of class
+	 * 
+	 * @param string $hostname   HostName MongoDb
+	 * @param string $username   User of MongoDb
+	 * @param string $password   Password of User
+	 * @param string $dbname     DataBase Name
+	 * @param string $key        V3ctorWH Key
+	 */
+	public function __construct($hostname, $username, $password, $dbname, $key)
+	{
+		$this->_key = $key;
+
+		try{
+            $this->_conn = new Mongo('mongodb://' . $username . ':' . $password . '@' . $hostname .':27017/' . $dbname);
+
+			if (! is_null($this->_conn))
+				$this->_db = $this->_conn->selectDB($dbname);
+        }
+        catch (Exception $e) {
+            $this->_conn = null;
+        }
+	}
+
+	/**
+	 * Find Object by _id
+	 *
+	 * @param  string $entity Entity
+	 * @param  string $_id 	  Identificator of Object
+	 * @return array Object
+	 */
+	public function findObject($entity, $_id)
+	{
+		$retValue = array();
+		$query = array('_id' => new MongoId($_id));
+
+		if (! is_null($this->_db)){
+			$mongo = $this->_db->selectCollection($entity);
+
+			// Find Object
+			$retValue = $mongo->findOne($query);
+
+			if (is_null($retValue))
+				$retValue = array();
+		}
+
+		return $retValue;
+	}
+
+	/**
+	 * Find by Pattern (Query)
+	 *
+	 * @param  string $entity Entity
+	 * @param  string $query  Query Pattern
+	 * @return array Object
+	 */
+	public function query($entity, $query)
+	{
+		$retValue = array();
+
+		if (! is_null($this->_db)){
+			$mongo = $this->_db->selectCollection($entity);
+
+			// Find by query
+			$cursor = $mongo->find($query);
+
+			if (is_null($cursor))
+				$retValue = array();
+			else
+				$retValue = iterator_to_array($cursor);
+		}
+
+		return $retValue;
+	}
+
+	/**
+	 * Create New Object
+	 *
+	 * @param  string $entity    Entity
+	 * @param  array $jsonObject Json Object to Insert
+	 * @return array Inserted Object
+	 */
+	public function newObject($entity, $jsonObject)
+	{
+		$retValue = array();
+
+		if (! is_null($this->_db)){
+			$mongo = $this->_db->selectCollection($entity);
+
+			// Insert Object
+			$mongo->insert($jsonObject);
+
+			$retValue = $jsonObject;
+		}
+
+		return $retValue;
+	}
+
+	/**
+	 * Update a Object by _id
+	 *
+	 * @param  string $entity    Entity
+	 * @param  string $_id       Identificator of Object
+	 * @param  array $jsonObject New Json Object
+	 * @return boolean
+	 */
+	public function updateObject($entity, $_id, $jsonObject)
+	{
+		$retValue = true;
+		$query = array('_id' => new MongoId($_id));
+		$jsonUpd = array('$set' => $jsonObject);
+
+		if (! is_null($this->_db)){
+			try {
+			    $mongo = $this->_db->selectCollection($entity);
+
+			    // Update Object
+			    $result = $mongo->update($query, $jsonUpd, array('w' => 1));
+
+			    $retValue = $result["updatedExisting"];
+			}
+			catch (MongoCursorException $e) {
+				echo var_dump($e);
+			    $retValue = false;
+			}
+		}
+
+		return $retValue;
+	}
+
+	/**
+	 * Delete Object by _id
+	 *
+	 * @param  string $entity Entity
+	 * @param  string $_id    Identificator of Object
+	 * @return boolean
+	 */
+	public function deleteObject($entity, $_id)
+	{
+		$retValue = false;
+		$query = array('_id' => new MongoId($_id));
+
+		if (! is_null($this->_db)){
+			try {
+			    $mongo = $this->_db->selectCollection($entity);
+
+			    // Remove Object
+				$result = $mongo->remove($query, array('w' => 1));
+				
+				if ($result["n"] > 0)
+					$retValue = true;
+			}
+			catch (MongoCursorException $e) {
+			    $retValue = false;
+			}
+		}
+
+		return $retValue;
+	}
+
+	/**
+	 * Create Entity
+	 * 
+	 * @param  string $entityName Name of Entity
+	 * @param  array  $jsonConfig Json Configuration
+	 * @return boolean
+	 */
+	public function createEntity($entityName, $jsonConfig)
+	{
+		// Not Implemented for MongoDb
+		return false;
 	}
 }
 

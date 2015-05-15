@@ -1,6 +1,6 @@
 <?php
 require_once('../classes/config.php');
-require_once('../classes/V3WareHouse.class.php');
+require_once('../classes/V3ctorWH.class.php');
 
 require '../vendor/autoload.php';
 
@@ -9,7 +9,7 @@ require '../vendor/autoload.php';
 $app = new \Slim\Slim();
 
 // V3ctorWH Instance
-$v3ctor = V3WareHouse::getInstance('v3Mongo', $hostname, $username, $password, $dbname, $key);
+$v3ctor = V3ctorWH::getInstance($hostname, $username, $password, $dbname, $key);
 
 if (! $v3ctor->isConnected())
     die("Unable load V3ctor WareHouse");
@@ -28,7 +28,7 @@ function validateKey() {
         $app->redirect('/notkey');
     }
     else{
-        $v3ctor = V3WareHouse::getInstance();
+        $v3ctor = V3ctorWH::getInstance();
 
         if ($key != $v3ctor->getKey()){
             $app->redirect('/invalidkey');
