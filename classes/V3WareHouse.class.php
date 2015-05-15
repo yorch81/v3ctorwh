@@ -47,13 +47,14 @@ class V3WareHouse
 
 
 	/**
-	 * [__construct description]
-	 * @param [type] $dbtype   [description]
-	 * @param [type] $hostname [description]
-	 * @param [type] $username [description]
-	 * @param [type] $password [description]
-	 * @param [type] $dbname   [description]
-	 * @param [type] $key      [description]
+	 * Constructor of class
+	 * 
+	 * @param string $dbtype   DataBase Provider
+	 * @param string $hostname Hostname
+	 * @param string $username User Name
+	 * @param string $password Password
+	 * @param string $dbname   DataBase Name
+	 * @param string $key      V3ctorWH Key
 	 */
 	private function __construct($dbtype, $hostname, $username, $password, $dbname, $key)
 	{
@@ -67,14 +68,15 @@ class V3WareHouse
 	}
 
 	/**
-	 * [getInstance description]
-	 * @param  string $dbtype   [description]
-	 * @param  string $hostname [description]
-	 * @param  string $username [description]
-	 * @param  string $password [description]
-	 * @param  string $dbname   [description]
-	 * @param  string $key      [description]
-	 * @return [type]           [description]
+	 * Singleton Implementation
+	 * 
+	 * @param string $dbtype   DataBase Provider
+	 * @param string $hostname Hostname
+	 * @param string $username User Name
+	 * @param string $password Password
+	 * @param string $dbname   DataBase Name
+	 * @param string $key      V3ctorWH Key
+	 * @return resource | null
 	 */
 	public static function getInstance($dbtype = 'v3Mongo', $hostname = '', $username = '', $password = '', $dbname = '', $key = '')
 	{

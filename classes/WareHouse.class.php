@@ -314,4 +314,158 @@ class v3Mongo extends WareHouse
 	}
 }
 
+/**
+ * V3MySQL WareHouse for MySQL or MariaDb
+ *
+ * @category   V3MySQL
+ * @package    V3MySQL
+ * @copyright  Copyright 2015 Jorge Alberto Ponce Turrubiates
+ * @license    http://www.apache.org/licenses/LICENSE-2.0
+ * @version    1.0.0, 2015-05-14
+ * @author     Jorge Alberto Ponce Turrubiates (the.yorch@gmail.com)
+ */
+class V3MySQL extends WareHouse
+{
+	/**
+	 * Constructor of class
+	 * 
+	 * @param string $hostname   HostName MongoDb
+	 * @param string $username   User of MongoDb
+	 * @param string $password   Password of User
+	 * @param string $dbname     DataBase Name
+	 * @param string $key        V3ctorWH Key
+	 */
+	public function __construct($hostname, $username, $password, $dbname, $key)
+	{
+		$this->_key = $key;
+
+		try {
+			$this->_conn = new medoo([
+			    'database_type' => 'mysql',
+			    'database_name' => $dbname,
+			    'server' => $hostname,
+			    'username' => $username,
+			    'password' => $password,
+			    'charset' => 'utf8',
+			    'port' => 3306,
+			    'option' => [
+			        PDO::ATTR_CASE => PDO::CASE_NATURAL
+			    ]
+			]); 
+        }
+        catch (Exception $e) {
+            $this->_conn = null;
+        }
+	}
+
+	/**
+	 * Find Object by _id
+	 *
+	 * @param  string $entity Entity
+	 * @param  string $_id 	  Identificator of Object
+	 * @return array Object
+	 */
+	public function findObject($entity, $_id)
+	{
+		$retValue = array();
+		$query = sprintf("SELECT * FROM %s WHERE _id = %s", $entity, $_id);
+
+		if (! is_null($this->_conn)){
+			$retValue = $this->_conn->query($query)->fetchAll();
+		}
+
+		return $retValue;
+	}
+
+	/**
+	 * Find by Pattern (Query)
+	 *
+	 * @param  string $entity Entity
+	 * @param  string $query  Query Pattern
+	 * @return array Object
+	 */
+	public function query($entity, $query)
+	{
+		$retValue = array();
+
+		if (! is_null($this->_conn)){
+			$retValue = $this->_conn->select($entity, '*', $query);
+		}
+
+		return $retValue;
+	}
+
+	/**
+	 * Create New Object
+	 *
+	 * @param  string $entity    Entity
+	 * @param  array $jsonObject Json Object to Insert
+	 * @return array Inserted Object
+	 */
+	public function newObject($entity, $jsonObject)
+	{
+		$retValue = array();
+
+		if (! is_null($this->_conn)){
+			$last_user_id = $this->_conn->insert($entity, array($jsonObject));
+
+			return array('_id' => $last_user_id);
+		}
+		else
+			return $retValue;
+	}
+
+	/**
+	 * Update a Object by _id
+	 *
+	 * @param  string $entity    Entity
+	 * @param  string $_id       Identificator of Object
+	 * @param  array $jsonObject New Json Object
+	 * @return boolean
+	 */
+	public function updateObject($entity, $_id, $jsonObject)
+	{
+		$retValue = true;
+		$arrayWhere = array('_id' => $_id);
+
+		if (! is_null($this->_conn)){
+			$this->_conn->update($entity, $jsonObject, $arrayWhere);
+		}
+		
+		return $retValue;
+	}
+
+	/**
+	 * Delete Object by _id
+	 *
+	 * @param  string $entity Entity
+	 * @param  string $_id    Identificator of Object
+	 * @return boolean
+	 */
+	public function deleteObject($entity, $_id)
+	{
+		$retValue = true;
+		$arrayWhere = array('_id' => $_id);
+
+		if (! is_null($this->_conn)){
+			$this->_conn->delete($entity, $arrayWhere);
+		}
+		
+		return $retValue;
+	}
+
+	/**
+	 * Create Entity
+	 * 
+	 * @param  string $entityName Name of Entity
+	 * @param  array  $jsonConfig Json Configuration
+	 * @return boolean
+	 */
+	public function createEntity($entityName, $jsonConfig)
+	{
+		// Not Implemented for MySQL
+		return false;
+	}
+}
+
 ?>
