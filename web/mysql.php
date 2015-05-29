@@ -20,7 +20,8 @@ $v3ctor->updateObject("markers2", 1, $jsonData);
 
 $v3ctor->deleteObject("markers2", 1);
 
-echo var_dump($v3ctor->query("markers2", array('address' => 'Mante')));
+
+//echo var_dump($v3ctor->query("markers2", array('address' => 'Mante')));
 
 //echo var_dump($v3ctor->newObject("markers2", $jsonData));
 

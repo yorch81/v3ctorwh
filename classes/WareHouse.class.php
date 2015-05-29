@@ -262,7 +262,6 @@ class v3Mongo extends WareHouse
 			    $retValue = $result["updatedExisting"];
 			}
 			catch (MongoCursorException $e) {
-				echo var_dump($e);
 			    $retValue = false;
 			}
 		}
