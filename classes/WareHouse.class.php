@@ -1,5 +1,8 @@
 <?php
 
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+
 /**
  * WareHouse 
  *
@@ -43,6 +46,14 @@ abstract class WareHouse
      * @access private
      */
 	protected $_key = null;
+
+	/**
+     * Log Instance
+     *
+     * @var object $_log Log Instance
+     * @access private
+     */
+	protected $_log= null;
 
 	/**
 	 * Find Object by _id
@@ -118,6 +129,18 @@ abstract class WareHouse
 	{
 		return $this->_key;
 	}
+
+	/**
+	 * Initialize Log
+	 */
+	public function initLog()
+	{
+		// Create Log
+		$logName = 'v3wh_log-' . date("Y-m-d") . '.log';
+
+		$this->_log = new Logger('v3wh');
+		$this->_log->pushHandler(new StreamHandler($logName, Logger::ERROR));
+	}
 }
 
 /**
@@ -153,6 +176,8 @@ class v3Mongo extends WareHouse
 	{
 		$this->_key = $key;
 
+		$this->initLog();
+
 		try{
             $this->_conn = new Mongo('mongodb://' . $username . ':' . $password . '@' . $hostname .':27017/' . $dbname);
 
@@ -160,6 +185,7 @@ class v3Mongo extends WareHouse
 				$this->_db = $this->_conn->selectDB($dbname);
         }
         catch (Exception $e) {
+        	$this->_log->addError($e->getMessage());
             $this->_conn = null;
         }
 	}
@@ -177,13 +203,19 @@ class v3Mongo extends WareHouse
 		$query = array('_id' => new MongoId($_id));
 
 		if (! is_null($this->_db)){
-			$mongo = $this->_db->selectCollection($entity);
+			try{
+				$mongo = $this->_db->selectCollection($entity);
 
-			// Find Object
-			$retValue = $mongo->findOne($query);
+				// Find Object
+				$retValue = $mongo->findOne($query);
 
-			if (is_null($retValue))
-				$retValue = array();
+				if (is_null($retValue))
+					$retValue = array();
+			}
+			catch(Exception $e) {
+				$this->_log->addError($e->getMessage());
+			}
+			
 		}
 
 		return $retValue;
@@ -201,15 +233,20 @@ class v3Mongo extends WareHouse
 		$retValue = array();
 
 		if (! is_null($this->_db)){
-			$mongo = $this->_db->selectCollection($entity);
+			try{
+				$mongo = $this->_db->selectCollection($entity);
 
-			// Find by query
-			$cursor = $mongo->find($query);
+				// Find by query
+				$cursor = $mongo->find($query);
 
-			if (is_null($cursor))
-				$retValue = array();
-			else
-				$retValue = iterator_to_array($cursor);
+				if (is_null($cursor))
+					$retValue = array();
+				else
+					$retValue = iterator_to_array($cursor);
+			}
+			catch(Exception $e) {
+				$this->_log->addError($e->getMessage());
+			}	
 		}
 
 		return $retValue;
@@ -227,12 +264,17 @@ class v3Mongo extends WareHouse
 		$retValue = array();
 
 		if (! is_null($this->_db)){
-			$mongo = $this->_db->selectCollection($entity);
+			try{
+				$mongo = $this->_db->selectCollection($entity);
 
-			// Insert Object
-			$mongo->insert($jsonObject);
+				// Insert Object
+				$mongo->insert($jsonObject);
 
-			$retValue = $jsonObject;
+				$retValue = $jsonObject;
+			}
+			catch(Exception $e) {
+				$this->_log->addError($e->getMessage());
+			}
 		}
 
 		return $retValue;
@@ -262,6 +304,7 @@ class v3Mongo extends WareHouse
 			    $retValue = $result["updatedExisting"];
 			}
 			catch (MongoCursorException $e) {
+				$this->_log->addError($e->getMessage());
 			    $retValue = false;
 			}
 		}
@@ -292,6 +335,7 @@ class v3Mongo extends WareHouse
 					$retValue = true;
 			}
 			catch (MongoCursorException $e) {
+				$this->_log->addError($e->getMessage());
 			    $retValue = false;
 			}
 		}
