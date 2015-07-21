@@ -11,6 +11,10 @@ V3ctorWH is a Objects WareHouse for V3ctor Club
 ## Developer Documentation ##
 Execute phpdoc -d classes/
 
+## Unit Test ##
+For run Unit Test, complete information connection and execute the next command:
+> phpunit classes/V3WareHouseTest.php
+
 ## Installation ##
 Clone Repository
 Execute php composer.phar install

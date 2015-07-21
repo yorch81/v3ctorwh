@@ -54,15 +54,95 @@ class V3WareHouseTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test General
+     * Test Is Connected
      */
-    public function testGeneral() {
+    public function testIsConnected() {
         $expected = "";
 
-        if (! $this->v3ctor->isConnected())
-        	$expected = "NOT_CONNECTED";
+        if ($this->v3ctor->isConnected())
+        	$expected = "OK";
 
-        $this->assertEquals($expected, "");
+        $this->assertEquals($expected, "OK");
+    }
+
+    /**
+     * Test Find Object
+     */
+    public function testFindObject() {
+        $doc = array('r' => 666);
+
+        $r = $this->v3ctor->newObject("demo", $doc);
+
+        $id = (string) $r['_id'];
+
+        $result = $this->v3ctor->findObject("demo", $id);
+
+        $total = count($result);
+
+        $this->assertGreaterThan(0, $total);
+    }
+
+    /**
+     * Test Query
+     */
+    public function testQuery() {
+        $doc = array('r' => 666);
+
+        $r = $this->v3ctor->newObject("demo", $doc);
+
+        $result = $this->v3ctor->query("demo", $doc);
+
+        $total = count($result);
+
+        $this->assertGreaterThan(0, $total);
+    }
+
+    /**
+     * Test New Object
+     */
+    public function testNewObject() {
+        $expected = 666;
+        $doc = array('r' => 666);
+
+        $newObject = $this->v3ctor->newObject("demo", $doc);
+
+        $result = $newObject['r'];
+
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * Test Update Object
+     */
+    public function testUpdateObject() {
+        $expected = true;
+        $doc = array('r' => 666);
+
+        $newObject = $this->v3ctor->newObject("demo", $doc);
+
+        $id = (string) $newObject['_id'];
+
+        $doc = array('r' => 777);
+
+        $result = $this->v3ctor->updateObject("demo", $id, $doc);
+
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * Test Delete Object
+     */
+    public function testDeleteObject() {
+        $expected = true;
+        $doc = array('r' => 666);
+
+        $newObject = $this->v3ctor->newObject("demo", $doc);
+
+        $id = (string) $newObject['_id'];
+
+        $result = $this->v3ctor->deleteObject("demo", $id);
+
+        $this->assertEquals($expected, $result);
     }
 }
 ?>
