@@ -1,8 +1,6 @@
 <?php
-require_once('../classes/config.php');
-require_once('../classes/V3WareHouse.class.php');
-
-require '../vendor/autoload.php';
+require_once('config.php');
+require 'vendor/autoload.php';
 
 \Slim\Slim::registerAutoloader();
 
@@ -16,9 +14,13 @@ if (! $v3ctor->isConnected())
 
 $jsonData = array('name' => 'jorgitos', 'address' => 'Moderna', 'lat' => 23.198746, 'lng' => -99.109741);
 
-$v3ctor->updateObject("markers2", 1, $jsonData);
+$v3ctor->newObject("markers2", $jsonData);
 
-$v3ctor->deleteObject("markers2", 1);
+$jsonData = array('name' => 'jorgitos', 'address' => 'Unidos Avanzamos', 'lat' => 23.198746, 'lng' => -99.109741);
+
+$v3ctor->updateObject("markers2", 6, $jsonData);
+
+$v3ctor->deleteObject("markers2", 5);
 
 
 //echo var_dump($v3ctor->query("markers2", array('address' => 'Mante')));
