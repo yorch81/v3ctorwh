@@ -98,8 +98,8 @@ $app->put(
             
             $result = $v3ctor->updateObject($entity, $id, $jsonData);
 
-            $msgOk = array('msg' => 'Ok');
-            $msgBad = array('msg' => 'Bad');
+            $msgOk = array('msg' => 'OK');
+            $msgBad = array('msg' => 'ERROR');
 
             if ($result)
                 echo json_encode($msgOk);
@@ -126,8 +126,8 @@ $app->delete(
         
         $result = $v3ctor->deleteObject($entity, $id);
 
-        $msgOk = array('msg' => 'Ok');
-        $msgBad = array('msg' => 'Bad');
+        $msgOk = array('msg' => 'OK');
+        $msgBad = array('msg' => 'ERROR');
 
         if ($result)
             echo json_encode($msgOk);
