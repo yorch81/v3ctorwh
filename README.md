@@ -1,11 +1,12 @@
 # V3ctor WareHouse #
 
 ## Description ##
-V3ctorWH is a REST Objects WareHouse for V3ctor Club
+V3ctorWH is a REST API for V3 WareHouse Core.
 
 ## Requirements ##
 * [PHP 5.4.1 or higher](http://www.php.net/)
 * [MongoDb](http://www.mongodb.org/)
+* [MySQL](https://www.mysql.com/)
 * [Slim Framework](http://www.slimframework.com/)
 * [V3Wh Core](https://github.com/yorch81/v3wh)
 
@@ -31,6 +32,10 @@ $ curl -X DELETE http://my_url/entity/_id?auth=key
 
 To Query Entity
 $ curl -X POST -d '{"field" : "value"}' http://my_url/query/entity?auth=key
+
+## Original Idea ##
+Ernesto Celis de la Fuente.
+https://celisdelafuente.net/
 
 ## References ##
 https://en.wikipedia.org/wiki/Representational_state_transfer
