@@ -161,11 +161,12 @@ $app->post(
     function ($entity) use ($app, $v3ctor) {
         try{
             $body = $app->request->getBody();
+            
             $jsonQuery = json_decode($body);
 
             $app->response()->header('Content-Type', 'application/json');
             $app->response()->status(200);  
-            
+
             echo json_encode($v3ctor->query($entity, $jsonQuery));
         }
         catch (ResourceNotFoundException $e) {
