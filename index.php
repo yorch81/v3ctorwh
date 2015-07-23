@@ -1,25 +1,10 @@
 <?php
+require 'config.php';
 require 'vendor/autoload.php';
 
 \Slim\Slim::registerAutoloader();
 
 $app = new \Slim\Slim();
-
-// Parse Config File
-if (file_exists("config.ini")){
-    $config = parse_ini_file("config.ini");
-
-    $hostname = $config['hostname'];
-    $username = $config['username'];
-    $password = $config['password'];
-    $dbname   = $config['dbname'];
-    $key      = $config['key'];
-}
-else{
-    $msg = array("error" => 'File Configuration not exists');
-
-    die(json_encode($msg));
-}
 
 // V3ctorWH Instance
 $v3ctor = V3WareHouse::getInstance('v3Mongo', $hostname, $username, $password, $dbname, $key);
