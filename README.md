@@ -14,6 +14,17 @@ V3ctorWH is a REST API for V3 WareHouse Core.
 Clone Repository
 Execute php composer.phar install
 
+Create config.ini
+~~~
+
+hostname = "MONGODB_HOST"
+username = "MONGODB_USER"
+password = "MONGODB_PASSWORD"
+dbname   = "MONGODB_DBNAME"
+key      = "ACCESS_KEY"
+
+~~~
+
 ## Notes ##
 V3ctorWH is a Objects WareHouse in MongoDb
 

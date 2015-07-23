@@ -1,6 +1,6 @@
 *~
 .*.sw*
-config.php
+config.ini
 *.log
 vendor/
 *.lock
