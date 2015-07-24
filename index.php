@@ -150,7 +150,9 @@ $app->post(
             $jsonQuery = json_decode($body);
 
             $app->response()->header('Content-Type', 'application/json');
-            $app->response()->status(200);  
+            $app->response()->status(200);
+
+            $jsonQuery = (array) $jsonQuery;
 
             echo json_encode($v3ctor->query($entity, $jsonQuery));
         }
