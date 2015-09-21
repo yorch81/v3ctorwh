@@ -16,13 +16,13 @@ Execute php composer.phar install
 
 Create config.php
 ~~~
-
+```php
 $hostname = 'DB_HOST';
 $username = 'DB_USER';
 $password = 'DB_PASSWORD';
 $dbname   = 'DBNAME';
 $key      = "KEY";
-
+```
 ~~~
 
 ## Notes ##
