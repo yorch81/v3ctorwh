@@ -15,7 +15,7 @@ Clone Repository
 Execute php composer.phar install
 
 Create config.php
-~~~
+
 ```php
 $hostname = 'DB_HOST';
 $username = 'DB_USER';
@@ -23,7 +23,7 @@ $password = 'DB_PASSWORD';
 $dbname   = 'DBNAME';
 $key      = "KEY";
 ```
-~~~
+```php
 
 ## Notes ##
 V3ctorWH is a Objects WareHouse in MongoDb
@@ -43,7 +43,7 @@ $ curl -X DELETE http://my_url/entity/_id?auth=key
 
 To Query Entity
 $ curl -X POST -d '{"field" : "value"}' http://my_url/query/entity?auth=key
-
+```
 ## Original Idea ##
 Ernesto Celis de la Fuente.
 https://celisdelafuente.net/
