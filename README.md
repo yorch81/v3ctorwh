@@ -9,10 +9,22 @@ V3ctorWH is a REST API for V3 WareHouse Core.
 * [MySQL](https://www.mysql.com/)
 * [Slim Framework](http://www.slimframework.com/)
 * [V3Wh Core](https://github.com/yorch81/v3wh)
+* [V3Wh Application](https://github.com/yorch81/v3application)
 
 ## Installation ##
-Clone Repository
-Execute php composer.phar install
+Create composer.json.
+~~~
+
+"require": {
+	"php": ">=5.4.0",
+    "slim/slim": "2.*",
+    "yorch/v3wh" : "dev-master",
+    "yorch/v3application" : "dev-master",
+    "monolog/monolog": "1.13.1",
+    "catfan/medoo": "dev-master"
+}
+
+~~~
 
 Create config.php
 
@@ -24,6 +36,19 @@ $dbname   = 'DBNAME';
 $key      = "KEY";
 ```
 ```php
+
+Create index.php
+~~~
+
+<?php
+require 'config.php';
+require 'vendor/autoload.php';
+
+new V3Application(V3Application::MONGODB, $hostname, $username, $password, $dbname, $port, $key);
+
+?>
+
+~~~
 
 ## Notes ##
 V3ctorWH is a Objects WareHouse in MongoDb
