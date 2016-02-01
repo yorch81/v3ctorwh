@@ -28,14 +28,15 @@ Create composer.json.
 
 Create config.php
 
-```php
+~~~
+
 $hostname = 'DB_HOST';
 $username = 'DB_USER';
 $password = 'DB_PASSWORD';
 $dbname   = 'DBNAME';
 $key      = "KEY";
-```
-```php
+
+~~~
 
 Create index.php
 ~~~
