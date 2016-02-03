@@ -16,7 +16,7 @@ Create composer.json.
 ~~~
 
 "require": {
-	"php": ">=5.4.0",
+    "php": ">=5.4.0",
     "slim/slim": "2.*",
     "yorch/v3wh" : "dev-master",
     "yorch/v3application" : "dev-master",
@@ -34,6 +34,7 @@ $hostname = 'DB_HOST';
 $username = 'DB_USER';
 $password = 'DB_PASSWORD';
 $dbname   = 'DBNAME';
+$port 	  = 27017;
 $key      = "KEY";
 
 ~~~
