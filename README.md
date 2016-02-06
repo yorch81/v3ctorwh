@@ -12,19 +12,7 @@ V3ctorWH is a REST API for V3 WareHouse Core.
 * [V3Wh Application](https://github.com/yorch81/v3application)
 
 ## Installation ##
-Create composer.json.
-~~~
-
-"require": {
-    "php": ">=5.4.0",
-    "slim/slim": "2.*",
-    "yorch/v3wh" : "dev-master",
-    "yorch/v3application" : "dev-master",
-    "monolog/monolog": "1.13.1",
-    "catfan/medoo": "dev-master"
-}
-
-~~~
+Clone repository and execute composer.phar install
 
 Create config.php
 
@@ -36,19 +24,6 @@ $password = 'DB_PASSWORD';
 $dbname   = 'DBNAME';
 $port 	  = 27017;
 $key      = "KEY";
-
-~~~
-
-Create index.php
-~~~
-
-<?php
-require 'config.php';
-require 'vendor/autoload.php';
-
-new V3Application(V3Application::MONGODB, $hostname, $username, $password, $dbname, $port, $key);
-
-?>
 
 ~~~
 
