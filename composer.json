@@ -16,7 +16,6 @@
         "slim/slim": "2.*",
         "yorch/v3wh" : "dev-master",
         "yorch/v3application" : "dev-master",
-        "monolog/monolog": "1.13.1",
-        "catfan/medoo": "dev-master"
+        "monolog/monolog": "1.13.1"
     }
 }

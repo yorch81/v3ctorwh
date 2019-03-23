@@ -2,8 +2,11 @@
 require 'config.php';
 require 'vendor/autoload.php';
 
+// For JavaScript SDK
+header("Access-Control-Allow-Origin: *");
+
 // Init Database Connection
-V3WareHouse::getInstance("v3Mongo", $hostname, $username, $password, $dbname, $port);
+V3WareHouse::getInstance("v3MongoDB", $hostname, $username, $password, $dbname, $port);
 
 // Init Application
 $app = new V3Application($dbname, $key);
